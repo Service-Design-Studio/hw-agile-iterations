@@ -1,5 +1,5 @@
 env:
-  secure: ''
+  secure: <secret>
 language: ruby
 dist: focal
 rvm:
@@ -8,18 +8,15 @@ cache:
   directories:
   - node_modules
   - vendor/bundle
-env:
-- BUNDLE_PATH=vendor/bundle
 before_install:
-- gem install bundler:2.1.4
+- gem install bundler:1.17.3
 - nvm install 12.13.1
 - npm install -g yarn@1.22.4
 before_script:
 - bundle install
 - yarn install
 script:
-- bundle exec rake db:drop
+- RAILS_ENV=test bundle exec rake db:create --trace
 - RAILS_ENV=test bundle exec rake db:migrate --trace
-- bundle exec rake db:test:prepare
-- bundle exec rspec
-- bundle exec cucumber
+  #- bundle exec rspec
+  #- bundle exec cucumber
